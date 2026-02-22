@@ -21,7 +21,7 @@ class ProductStock extends ARConnector
         }
         $data = [
             'itemIds' => $productCodes,
-            'branchIdsExcluded' => $this->Config()->get('branches_to_be_excluded_from_stock'),
+            'branchIdsExcluded' => $this->config()->get('branches_to_be_excluded_from_stock'),
             'availableSince' => null,
             'onlyStoresWithStock' => false,
         ];
