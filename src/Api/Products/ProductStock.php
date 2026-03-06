@@ -36,7 +36,7 @@ class ProductStock extends ARConnector
             $this->output('<h5>to</h5>' . $url);
         }
         $dataKey = serialize($data);
-        if (! isset(self::$storedStockResponses[$dataKey])) {
+        if (! array_key_exists($dataKey, self::$storedStockResponses)) {
             self::$storedStockResponses[$dataKey] = $this->runRequest($url, 'POST', $data, false, 1);
             if (self::$storedStockResponses[$dataKey] === null) {
                 return null;
