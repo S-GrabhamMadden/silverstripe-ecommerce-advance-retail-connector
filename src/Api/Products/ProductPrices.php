@@ -4,11 +4,6 @@ namespace Sunnysideup\EcommerceAdvanceRetailConnector\Api\Products;
 
 // use SilverStripe\Core\Config\Config;
 
-use SilverStripe\ORM\DataList;
-use SilverStripe\ORM\DB;
-use Sunnysideup\Ecommerce\Api\ArrayMethods;
-use Sunnysideup\Ecommerce\Pages\Product;
-use Sunnysideup\Ecommerce\Pages\ProductGroup;
 use Sunnysideup\EcommerceAdvanceRetailConnector\Api\ARConnector;
 
 class ProductPrices extends ARConnector
@@ -16,10 +11,10 @@ class ProductPrices extends ARConnector
     protected static $price_cache = [];
 
     /**
-    * @param string $since
-    * @param int    $pageNumber
-    * @param int    $pageSize
-    */
+     * @param string $since
+     * @param int    $pageNumber
+     * @param int    $pageSize
+     */
     public function getProducPricesChanged(
         ?string $since = '',
         ?int $pageNumber = 0,
@@ -41,17 +36,18 @@ class ProductPrices extends ARConnector
             self::$price_cache[$key] = $this->runRequest($url, 'POST', $data, false, 10);
         }
         if (!is_array(self::$price_cache[$key])) {
-            $this->logError('Invalid JSON response: ' .print_r(self::$price_cache[$key], 1));
+            $this->logError('Invalid JSON response: ' . print_r(self::$price_cache[$key], 1));
             return [];
         }
         return self::$price_cache[$key];
     }
 
     /**
-     * @param int $productCode
+     * @param string $productCode
      */
     public function getPricesChangedForOneProduct($productCode): ?array
     {
+        $productCode = trim($productCode);
         $products = $this->getProducPricesChanged();
         if ($products === null) {
             return null;
@@ -128,5 +124,4 @@ class ProductPrices extends ARConnector
 
         return $this->runRequest($url, 'POST', $data, false, 10);
     }
-
 }
