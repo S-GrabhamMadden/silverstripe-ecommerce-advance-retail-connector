@@ -61,6 +61,7 @@ class OrderStepSendOrderToAdvanceRetail extends OrderStep implements OrderStepIn
         if(Director::isDev()) {
             return true;
         }
+
         $logsExist = $this->RelevantLogEntries($order)->exists();
         if (! $logsExist) {
             $className = $this->getRelevantLogEntryClassName();
